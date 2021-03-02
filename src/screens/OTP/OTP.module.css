@@ -1,0 +1,16 @@
+.form{
+    display: flex;
+    justify-content: center;
+    margin: 40px auto;
+}
+
+.form input {
+    width: 50px;
+    height: 52px;
+    border:0;
+    outline: 0;
+    border-bottom: 2px solid #898c94;
+    /* border-radius: 5px; */
+    text-align: center;
+    margin: auto 15px;
+}
