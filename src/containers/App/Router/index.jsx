@@ -21,6 +21,7 @@ import UserManagement from "../../../screens/UserManagement/UserManagement";
 import AddUser from "../../../screens/UserManagement/AddUser/AddUser";
 import Vendors from '../../../screens/Vendors/Vendors';
 import Revenue from "../../../screens/Revenue/Revenue";
+import ItemDetails from '../../../screens/Vendors/VendorsService/ItemDetails/ItemDetails';
 import AddVendorService from "../../../screens/Vendors/VendorsService/AddVendorService/AddVendorService";
 import Users from "../../../screens/Users/Users";
 import AddService from "../../../screens/ServiceManagement/AddService/AddService";
@@ -53,6 +54,7 @@ const Router = () => (
         <Route path="/vendors-service" exact={true} render={props => <Drawer page={<VendorsService />} />} />
         <Route path="/vendors-service/:vendor_id" exact={true} render={props => <Drawer page={<AddVendorService />} />} />
         <Route path="/services/:service_id" exact={true} render={props => <Drawer page={<AddService />} />} />
+        <Route path="/vendors-service/item-details/:item_id" exact={true} render={props => <Drawer page={<ItemDetails />} />} />
         {// <Route exact path="/" component={Landing} />
         // <Route path="/404" component={NotFound404} />
         // <Route path="/lock_screen" component={LockScreen} />

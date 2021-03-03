@@ -121,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
     height: 32
   },
   category_button: {
-    ["@media (min-width: 280px) and (max-width: 899px)"]: {
+    ["@media (min-width: 280px) and (max-width: 1024px)"]: {
       marginLeft: 0,
     },
     ["@media (max-width: 345px)"]: {
@@ -147,6 +147,16 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: 'transparent',
       color: '#213d77'
     }
+  },
+  show_image: {
+    padding: 12, 
+    width: 61, 
+    margin: 0
+  },
+  show_image_true: {
+    padding: 0, 
+    width: 92, 
+    margin: 0
   },
   radio_label: {
     margin: 0,
@@ -222,6 +232,8 @@ export function AddVendorService(props) {
   const history= useHistory();
   const [managedByList, setManagedByList] = useState([])
   const [state, setState] = useState({
+      fileNameExt: "",
+      fileName: "",
       vendor_name: "",
       display_name: "",
       service_type: "",
@@ -229,7 +241,9 @@ export function AddVendorService(props) {
       chargeable: false,
       mobile_number: "",
       image: "",
+      image_name: "",
       from_time: "",
+      fileName: "",
       to_time: "",
       preparation_duration: "",
       maximum_duration: "",
@@ -326,19 +340,20 @@ export function AddVendorService(props) {
       if (!validateForm()) {
           return
       }
-      if(vendor_id == 'add'){
-        let merged = state
-        merged.is_assign_as_admin = pchecked;
-			  // setAddDetails(merged)
-        merged.station_code = merged.station_code.toUpperCase();
-		    let response = await props.add_station(merged)
-        console.log(response)
-        // debugger
-      } else {
-        console.log(state)
-        debugger
-        props.EditStationDetails(state)
-      }
+      alert('Details Saved Successfully')
+      // if(vendor_id == 'add'){
+      //   let merged = state
+      //   merged.is_assign_as_admin = pchecked;
+			//   // setAddDetails(merged)
+      //   merged.station_code = merged.station_code.toUpperCase();
+		  //   let response = await props.add_station(merged)
+      //   console.log(response)
+      //   // debugger
+      // } else {
+      //   console.log(state)
+      //   debugger
+      //   props.EditStationDetails(state)
+      // }
 
       // setModal(true);
 			// if(vendor_id == 'add'){
@@ -377,27 +392,24 @@ export function AddVendorService(props) {
   const validateForm =()=>{
     // All regex for validation
        var mobileValid = state.mobile_number.toString().match(/^[0]?[6789]\d{9}$/);
-       var usernameRegex = state.vendor_name.toString().match(/^[a-zA-Z ]+$/);
-
+      //  var usernameRegex = state.vendor_name.toString().match(/^[a-zA-Z ]+$/);
+      console.log(state.image_name)
+      debugger
        var isValid= true;
-       if(state.vendor_name.trim()==''|| !usernameRegex){
+       if(state.vendor_name.trim()==''){
            errors.vendor_name="vendor name is required or invalid name";
            isValid =false;
        }
-      else if(state.display_name.toString().trim()==''|| state.display_name.toString().match(/^[a-zA-Z ]+$/)){
+      else if(state.display_name.toString().trim()==''|| !state.display_name.toString().match(/^[a-zA-Z ]+$/)){
           errors.display_name="display name is required or invalid code";
           isValid =false;
       }
-      else  if(state.service_type=='0'|| state.service_type==''){
-          errors.service_type="service type is required";
-          isValid =false;
-      }
+      // else  if(state.service_type=='0'|| state.service_type==''){
+      //     errors.service_type="service type is required";
+      //     isValid =false;
+      // }
       else if(state.service_category =='0' || state.service_category ==''){
         errors.service_category="service category is required";
-        isValid =false;
-      }
-      else if(state.chargeable ==''){
-        errors.chargeable="chargeable is required";
         isValid =false;
       }
 
@@ -405,17 +417,17 @@ export function AddVendorService(props) {
           errors.mobile_number="mobile number is required or invalid number";
           isValid =false;
       }
-      else if(state.image =='' ){
-          errors.image="image is required";
-          isValid =false;
-      }
+      else if(state.fileName == ''){
+        errors.image="image is required";
+        isValid =false;
+    }
 
-      else if(state.from_time.toString().trim()==''){
+      else if(state.from_time ==''){
           errors.from_time="time is required";
           isValid =false;
       }
 
-      else if(state.to_time.toString().trim()==''){
+      else if(state.to_time ==''){
           errors.to_time="to time is required";
           isValid =false;
       }
@@ -617,6 +629,52 @@ export function AddVendorService(props) {
         }
    };
 
+   const uploadFile = (e, type)=>{
+    debugger
+    if (e.target.files && e.target.files.length > 0 ) {
+        var a = e.target.files[0].size;
+        const fsize = Math.round((a / 1024));
+
+        var validExtensions=['jpg','png','PNG','JPG','jpeg', 'JPEG'];
+        var isValid = true;
+        let file_name = e.target.files[0].name;
+        let fileExt = file_name.substr(file_name.lastIndexOf('.') + 1);
+         console.log(e.target.files[0])
+         if(e.target.files[0]){
+           if(e.target.files[0].size > (1048576*2)){
+             e.target.value = "";
+             isValid = false;
+             toast.error(`file size should less than ${2}mb`)
+             return;
+           }
+         }
+
+        let n = validExtensions.includes(fileExt);
+
+        if(!n) {
+          toast.error(`please select image file`)
+          return
+        }
+
+      if(isValid){
+      debugger
+        var fileName = e.target.files[0].name;
+        var fileNameExt = fileName.substr(fileName.lastIndexOf('.') + 1);
+          debugger
+        }
+        let reader = new FileReader();
+        reader.onloadend = (e, fileNameExt) => {
+          debugger
+        setState({
+          ...state,
+          fileNameExt: fileNameExt,
+          fileName: reader.result
+          })
+        }
+      reader.readAsDataURL(e.target.files[0]);
+      }
+   }
+
   return(
     <div className={styles.main}>
       <div className={styles.header}>
@@ -635,6 +693,7 @@ export function AddVendorService(props) {
                 <select className={styles.select1} name="vendor_name" value={state.vendor_name} onChange={handleInputs}>
                   {/* RURAL, URBAN, SEMI RURAL */}
                   <option value={'0'} >Vendor Name</option>
+                  <option value={'1'} >Robert</option>
                   {stationType.length > 0 ? stationType.map(data =>
                   <option key={data._id} value={data.vendor_name}>{data.vendor_name}</option>
                   ) : null}
@@ -661,22 +720,23 @@ export function AddVendorService(props) {
                 <div className={styles.error_message}>{errors.display_name}</div>
               </div>
 
-              <div className={styles.textfield}>
+              {/*<div className={styles.textfield}>
                 <label style={{color: '#535763'}}>Service Type</label>
                 <select className={styles.select1} name="service_type" value={state.service_type} onChange={handleInputs}>
-                  {/* RURAL, URBAN, SEMI RURAL */}
                   <option value={'0'} >Service Type</option>
+                  <option value={'1'} >Book</option>
                   {stationType.length > 0 ? stationType.map(data =>
                   <option key={data._id} value={data.service_type}>{data.service_type}</option>
                   ) : null}
               </select>
               <div className={styles.error_message}>{errors.service_type}</div>
-              </div>
+              </div>*/}
 
               <div className={styles.textfield}>
               <label style={{color: '#535763'}}>Service Category</label>
               <select className={styles.select1} name="service_category" value={state.service_category} onChange={handleInputs}>
                 <option value={'0'} >Service Category</option>
+                <option value={'1'} >Wheelchair</option>
                 {managedByList.length > 0 ? managedByList.map(data =>
                   <option key={data._id} value={data._id}>{data.name}</option>
                   ) : null}
@@ -692,6 +752,8 @@ export function AddVendorService(props) {
                 + Add Service Category
               </Button>
               </div>
+
+              <div></div>
 
               <div className={styles.textfield}>
                 <label style={{color: '#535763'}}>Chargeable</label>
@@ -724,13 +786,13 @@ export function AddVendorService(props) {
               </div>
 
             <div className={styles.textfield}>
-              <label style={{color: '#535763'}}>Upload Service Image</label>
+              <label style={{color: '#535763'}}>Upload Service Icon</label>
               <div className={styles.image_upload}>
-              <label style={{ padding: 12, width: 61, margin: 0 }} for="file-input">
-                  <img src={image_icon} />
+              <label className={state.fileName?classes.show_image_true: classes.show_image} for="file-input">
+                  <img src={state.fileName? state.fileName: image_icon} />
               </label>
               </div>
-              <input id="file-input" type="file" style={{display: 'none'}} className={styles.upload_image} accept="image/*" />
+              <input id="file-input" type="file" style={{display: 'none'}} onChange={uploadFile} className={styles.upload_image} accept="image/*" />
               <div className={styles.error_message}>{errors.image}</div>
             </div>
 
@@ -746,6 +808,7 @@ export function AddVendorService(props) {
                 <select className={styles.select1} name="from_time" value={state.from_time} onChange={handleInputs}>
                   {/* RURAL, URBAN, SEMI RURAL */}
                   <option value={'0'} >From</option>
+                  <option value={'1'} >10:00</option>
                   {stationType.length > 0 ? stationType.map(data =>
                   <option key={data._id} value={data.from_time}>{data.from_time}</option>
                   ) : null}
@@ -758,6 +821,7 @@ export function AddVendorService(props) {
                 <select className={styles.select1} name="to_time" value={state.to_time} onChange={handleInputs}>
                   {/* RURAL, URBAN, SEMI RURAL */}
                   <option value={'0'} >To</option>
+                  <option value={'1'} >20:00</option>
                   {stationType.length > 0 ? stationType.map(data =>
                   <option key={data._id} value={data.to_time}>{data.to_time}</option>
                   ) : null}

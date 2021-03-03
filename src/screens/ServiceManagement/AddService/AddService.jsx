@@ -111,6 +111,16 @@ const useStyles = makeStyles((theme) => ({
     // color: '#213D77',
     // borderRadius: 8
   },
+  show_image: {
+    padding: 12, 
+    width: 61, 
+    margin: 0
+  },
+  show_image_true: {
+    padding: 0, 
+    width: 92, 
+    margin: 0
+  },
   vendor_button: {
     width: 130,
     marginLeft: -10,
@@ -219,13 +229,15 @@ export function AddService(props) {
   const history= useHistory();
   const [managedByList, setManagedByList] = useState([])
   const [state, setState] = useState({
+    fileName: "",
+    fileNameExt: "",
     vendor_name: "",
     display_name: "",
     service_type: "",
     service_category: "",
     chargeable: false,
     mobile_number: "",
-    image: "",
+    image: {},
     from_time: "",
     to_time: "",
     preparation_duration: "",
@@ -376,30 +388,32 @@ export function AddService(props) {
        
        var mobileValid = state.mobile_number.toString().match(/^[0]?[6789]\d{9}$/);
        var isValid= true;
-
-       if(state.display_name.toString().trim()==''|| state.display_name.toString().match(/^[a-zA-Z ]+$/)){
+       console.log(state.image)
+       console.log(state.image.name)
+       debugger
+       if(state.display_name.toString().trim()==''|| !state.display_name.toString().match(/^[a-zA-Z ]+$/)){
             errors.display_name="display name is required or invalid code";
             isValid =false;
         }
         
-        else if(state.service_type=='0'|| state.service_type==''){
-            errors.service_type="service type is required";
-            isValid =false;
-        }
+        // else if(state.service_type=='0'|| state.service_type==''){
+        //     errors.service_type="service type is required";
+        //     isValid =false;
+        // }
         else if(state.service_category =='0' || state.service_category ==''){
             errors.service_category="service category is required";
             isValid =false;
         }
-        else if(state.chargeable ==''){
-            errors.chargeable="chargeable is required";
-            isValid =false;
-        }
+        // else if(state.chargeable ==''){
+        //     errors.chargeable="chargeable is required";
+        //     isValid =false;
+        // }
         else if(state.mobile_number.toString().trim()=='' || !mobileValid){
             errors.mobile_number="mobile number is required or invalid number";
             isValid =false;
         }
         
-        else if(state.image =='' ){
+        else if(state.fileName == ''){
             errors.image="image is required";
             isValid =false;
         }
@@ -593,23 +607,51 @@ export function AddService(props) {
   //   setErros({errors, [event.target.name]:""})
   // }
 
-  const handleChange = (date, type) => {
-      debugger
-        if(type=='start'){
-          setState({
-            ...state,
-            contract_start_date:moment(date)
-            // contract_start_date: date
-          })
-        } else {
-          setState({
-            ...state,
-            exp_end_date:moment(date)
-            // exp_end_date: date
-          })
-					//props.match.params.
+  const uploadFile = (e, type)=>{
+    debugger
+    if (e.target.files && e.target.files.length > 0 ) {
+        var a = e.target.files[0].size;
+        const fsize = Math.round((a / 1024));
+
+        var validExtensions=['jpg','png','PNG','JPG','jpeg', 'JPEG'];
+        var isValid = true;
+        let file_name = e.target.files[0].name;
+        let fileExt = file_name.substr(file_name.lastIndexOf('.') + 1);
+         console.log(e.target.files[0])
+         if(e.target.files[0]){
+           if(e.target.files[0].size > (1048576*2)){
+             e.target.value = "";
+             isValid = false;
+             toast.error(`file size should less than ${2}mb`)
+             return;
+           }
+         }
+
+        let n = validExtensions.includes(fileExt);
+
+        if(!n) {
+          toast.error(`please select image file`)
+          return
         }
-   };
+
+      if(isValid){
+      debugger
+        var fileName = e.target.files[0].name;
+        var fileNameExt = fileName.substr(fileName.lastIndexOf('.') + 1);
+          debugger
+        }
+        let reader = new FileReader();
+        reader.onloadend = (e, fileNameExt) => {
+          debugger
+        setState({
+          ...state,
+          fileNameExt: fileNameExt,
+          fileName: reader.result
+          })
+        }
+      reader.readAsDataURL(e.target.files[0]);
+      }
+   }
 
   return(
     <div className={styles.main}>
@@ -645,8 +687,8 @@ export function AddService(props) {
               <div className={styles.textfield}>
                 <label style={{color: '#535763'}}>Service Category</label>
                 <select className={styles.select1} name="service_category" value={state.service_category} onChange={handleInputs}>
-                  {/* RURAL, URBAN, SEMI RURAL */}
                   <option value={'0'} >Service Category</option>
+                  <option value={'1'} >Wheelchair</option>
                   {stationType.length > 0 ? stationType.map(data =>
                   <option key={data._id} value={data.service_category}>{data.service_category}</option>
                   ) : null}
@@ -695,11 +737,11 @@ export function AddService(props) {
             <div className={styles.textfield}>
               <label style={{color: '#535763'}}>Upload Service Icon</label>
               <div className={styles.image_upload}>
-              <label style={{ padding: 12, width: 61, margin: 0 }} for="file-input">
-                  <img src={image_icon} />
+              <label className={state.fileName?classes.show_image_true: classes.show_image} for="file-input">
+                  <img src={state.fileName? state.fileName: image_icon} />
               </label>
               </div>
-              <input id="file-input" type="file" style={{display: 'none'}} className={styles.upload_image} accept="image/*" />
+              <input id="file-input" type="file" style={{display: 'none'}} onChange={uploadFile} className={styles.upload_image} />
               <div className={styles.error_message}>{errors.image}</div>
             </div>
 
@@ -713,8 +755,8 @@ export function AddService(props) {
               <div className={styles.textfield}>
                 <label style={{color: '#535763'}}>From</label>
                 <select className={styles.select1} name="from_time" value={state.from_time} onChange={handleInputs}>
-                  {/* RURAL, URBAN, SEMI RURAL */}
                   <option value={'0'} >From</option>
+                  <option value={'1'} >10:00</option>
                   {stationType.length > 0 ? stationType.map(data =>
                   <option key={data._id} value={data.from_time}>{data.from_time}</option>
                   ) : null}
@@ -725,8 +767,8 @@ export function AddService(props) {
               <div className={styles.textfield}>
                 <label style={{color: '#535763'}}>To</label>
                 <select className={styles.select1} name="to_time" value={state.to_time} onChange={handleInputs}>
-                  {/* RURAL, URBAN, SEMI RURAL */}
                   <option value={'0'} >To</option>
+                  <option value={'1'} >20:00</option>
                   {stationType.length > 0 ? stationType.map(data =>
                   <option key={data._id} value={data.to_time}>{data.to_time}</option>
                   ) : null}

@@ -429,49 +429,49 @@ export function MiniDrawer(props) {
           {checkAuth('Station') && <Link to="/station-management">
             <ListItem disableRipple={true} className={path == 'station-management' ? styles.active : styles.list} button>
               <ListItemIcon><img className={path == 'station-management' ? styles.selected : styles.filter} src={train} /></ListItemIcon>
-              <ListItemText className={path == 'station-management' ? styles.selectedText : styles.listText} primary={"Station Management"} />
+              <ListItemText style={{ whiteSpace: open ? 'break-spaces': ""}} className={path == 'station-management' ? styles.selectedText : styles.listText} primary={"Station Management"} />
             </ListItem>
             </Link>}
 
             {checkAuth('User') && <Link to="/user-management">
             <ListItem disableRipple={true} className={path == 'user-management' ? styles.active : styles.list} button>
               <ListItemIcon><img className={path == 'user-management' ? styles.selected : styles.filter} src={user_alt} /></ListItemIcon>
-              <ListItemText className={path == 'user-management' ? styles.selectedText : styles.listText} primary={"User Management"} />
+              <ListItemText style={{ whiteSpace: open ? 'break-spaces': ""}} className={path == 'user-management' ? styles.selectedText : styles.listText} primary={"User Management"} />
             </ListItem>
             </Link>}
 
             {checkAuth('Vendor') &&<Link to="/vendors">
             <ListItem disableRipple={true} className={path == 'vendors' ? styles.active : styles.list} button>
               <ListItemIcon><img className={path == 'vendors' ? styles.selected : styles.filter} src={user_astronaut} /></ListItemIcon>
-              <ListItemText className={path == 'vendors' ? styles.selectedText : styles.listText} primary={"Vendor Reports"} />
+              <ListItemText style={{ whiteSpace: open ? 'break-spaces': ""}} className={path == 'vendors' ? styles.selectedText : styles.listText} primary={"Vendor Reports"} />
             </ListItem>
             </Link>}
 
             <Link to="/revenue">
             <ListItem disableRipple={true} className={path == 'revenue' ? styles.active : styles.list} button>
               <ListItemIcon><img className={path == 'revenue' ? styles.selected : styles.filter} src={rupee} /></ListItemIcon>
-              <ListItemText className={path == 'revenue' ? styles.selectedText : styles.listText} primary={"Revene Reports"} />
+              <ListItemText style={{ whiteSpace: open ? 'break-spaces': ""}} className={path == 'revenue' ? styles.selectedText : styles.listText} primary={"Revene Reports"} />
             </ListItem>
             </Link>
 
             <Link to="/users">
             <ListItem disableRipple={true} className={path == 'users' ? styles.active : styles.list} button>
               <ListItemIcon><img className={path == 'users' ? styles.selected : styles.filter} src={users} /></ListItemIcon>
-              <ListItemText className={path == 'users' ? styles.selectedText : styles.listText} primary={"App User Reports"} />
+              <ListItemText style={{ whiteSpace: open ? 'break-spaces': ""}} className={path == 'users' ? styles.selectedText : styles.listText} primary={"App User Reports"} />
             </ListItem>
             </Link>
 
             <Link to="/vendors-service">
             <ListItem disableRipple={true} className={path == 'vendors-service' ? styles.active : styles.list} button>
               <ListItemIcon><img className={path == 'vendors-service' ? styles.selected : styles.filter} src={vendor_icon} /></ListItemIcon>
-              <ListItemText className={path == 'vendors-service' ? styles.selectedText : styles.listText} primary={"Vendor Service Management"} />
+              <ListItemText style={{ whiteSpace: open ? 'break-spaces': ""}} className={path == 'vendors-service' ? styles.selectedText : styles.listText} primary={"Vendor Service Management"} />
             </ListItem>
             </Link>
 
             <Link to="/profile">
             <ListItem disableRipple={true} className={path == 'profile' ? styles.active : styles.list} button>
               <ListItemIcon><img className={path == 'profile' ? styles.selected : styles.filter} src={users_cog} /></ListItemIcon>
-              <ListItemText className={path == 'profile' ? styles.selectedText : styles.listText} primary={"Profile Settings"} />
+              <ListItemText style={{ whiteSpace: open ? 'break-spaces': "", transitionDelay: '10s'}} className={path == 'profile' ? styles.selectedText : styles.listText} primary={"Profile Settings"} />
             </ListItem>
             </Link>
         </List>

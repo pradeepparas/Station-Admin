@@ -24,7 +24,7 @@
 .table {
   padding-top: 1px;
   background-color: white;
-  margin-top: 75px;
+  margin-top: 50px;
   box-shadow: 0px 4px 8px 0px #08080833;
   /* margin-left: 20px; */
   /* margin-right: 20px; */
@@ -260,7 +260,7 @@ border-color: #cac7c7;
   text-align: left;
   font: normal normal bold 12px Montserrat;
   letter-spacing: 0px;
-  color: #52575D;
+  color: #213d77;
   opacity: 1;
 }
 
@@ -294,8 +294,6 @@ border-color: #cac7c7;
 }
 
 .customDeleteClass {
-  min-width: 600px;
-  left: -66px;
   margin-top: 100px;
   /* padding-left: 10;
   padding-right: 0; */
@@ -307,12 +305,12 @@ border-color: #cac7c7;
 .image_box {
   flex-direction: column;
   align-items: center;
-  width: 80%;
+  width: 74%;
   padding: 18px;
-  border-radius: 15px;
+  border-radius: 7px;
   border-width: 2px;
   border-style: solid;
-  border-color: #213d77;
+  border-color: #909ebb;
 }
 
 .modalContainer1 {
@@ -323,7 +321,7 @@ border-color: #cac7c7;
 
 .searchBarDiv {
   display: flex;
-  width: 455px;
+  width: 305px;
   justify-content: space-between;
 }
 
@@ -352,16 +350,75 @@ border-color: #cac7c7;
   color: #213D77;
   opacity: 1;
 }
-/* modalContainer customClass select1 575*/
 
-@media (min-width: 280px) and (max-width: 650px) {
-  .customDeleteClass {
-    min-width: inherit;
-    left: 0;
-  }
+/* for Switch css */
+.switch {
+  margin: 0;
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 22px;
 }
 
-@media (min-width: 280px) and (max-width: 1192px) {
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  /* height: 26px;
+  width: 26px; */
+  height: 14px;
+  width: 14px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #10ac44;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #10ac44;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(14px);
+  -ms-transform: translateX(14px);
+  transform: translateX(14px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+/* for Switch css */
+
+/* modalContainer customClass select1 680 */
+
+@media (min-width: 280px) and (max-width: 600px) {
   .filterContent {
     display: flex;
     flex-direction: column;
@@ -391,7 +448,7 @@ border-color: #cac7c7;
   }
 }
 
-@media (min-width: 280px) and (max-width: 680px) {
+@media (min-width: 280px) and (max-width: 600px) {
   .searchBarDiv {
     width: 91%;
   }
@@ -407,6 +464,9 @@ border-color: #cac7c7;
   }
   .modal_left_box {
     width: 70%;
+  }
+  .image_box {
+    width: 93%;
   }
 }
 
@@ -444,4 +504,13 @@ border-color: #cac7c7;
   }
 }
 
-/* label_span custom image_box select1 modalButton*/
+@media (min-width: 280px) and (max-width: 410px) {
+  .header {
+    flex-direction: column;
+  }
+  .title {
+    margin-bottom: 15px;
+  }
+}
+
+/* label_span header image_box 1192 select1 textModal searchBarDiv1026 modalButton*/

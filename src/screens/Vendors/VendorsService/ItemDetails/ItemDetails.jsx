@@ -18,11 +18,13 @@ import {
 import { Link, useHistory } from "react-router-dom";
 
 // Images
-import downArrow from '../../StationManagement/downArrow.png';
-import delete_logo from '../../StationManagement/delete.svg';
-import edit from '../../StationManagement/edit.png';
-import flag from '../../StationManagement/flag.svg';
-import vendor_image from './vendor_image.png';
+import downArrow from '../../../StationManagement/downArrow.png';
+import delete_logo from '../../../StationManagement/delete.svg';
+import edit from '../../../StationManagement/edit.png';
+import flag from '../../../StationManagement/flag.svg';
+import vendor_image from '../vendor_image.png';
+import view from './view.svg';
+import food_image from './food_image.jpg';
 
 // Material UI
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -43,49 +45,15 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import InputBase from '@material-ui/core/InputBase';
 import Pagination from '@material-ui/lab/Pagination';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 // components
 // import { getStationData } from "../../../redux/actions/stationActions";
-import styles from './VendorsService.module.css';
+import styles from './ItemDetails.module.css';
 // import * as actions from "../../../redux/actions/vendorActions";
 // import { setIsLoading } from '../../../redux/actions/stationActions';
 // import * as API from '../../../constants/APIs';
 // import styled from 'styled-components';
-
-const BootstrapInput = withStyles((theme) => ({
-  root: {
-    'label + &': {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
-    borderRadius: 4,
-    position: 'relative',
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
-    fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    '&:focus': {
-      borderRadius: 4,
-      borderColor: '#80bdff',
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    },
-  },
-}))(InputBase);
 
 const GreenCheckbox = withStyles({
   root: {
@@ -128,12 +96,12 @@ const useStyles = makeStyles((theme) => ({
       color: '#FFF'
     }
 	},
-
+// 680px
   form_control_checkbox: {
     height: 20
   },
   textField: {
-    ["@media (min-width: 280px) and (max-width: 1192px)"]: {
+    ["@media (min-width: 280px) and (max-width: 600px)"]: {
       width: '100%'
     }
   },
@@ -146,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   textField1:{
-    ["@media (min-width: 280px) and (max-width: 1192px)"]: {
+    ["@media (min-width: 280px) and (max-width: 600px)"]: {
       width: '100%',
       marginBottom: 5
     },
@@ -176,18 +144,18 @@ const useStyles = makeStyles((theme) => ({
   },
 	div1: {
 		marginRight: 10,
-		["@media (min-width: 681px) and (max-width: 1192px)"]:{
+		["@media (min-width: 681px) and (max-width: 600px)"]:{
 			width: 500,
 			marginRight: 0,
 		},
-		["@media (min-width: 280px) and (max-width:680px)"]:{
+		["@media (min-width: 280px) and (max-width:600px)"]:{
 			width: '91%',
 			marginRight: 0,
 		}
 	},
   button1: {
 		width: 100,
-    ["@media (min-width: 280px) and (max-width: 1192px)"]: {
+    ["@media (min-width: 280px) and (max-width: 600px)"]: {
       width: '100%',
       marginBottom: 5
     },
@@ -198,6 +166,21 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: '#213D77',
       color: '#FFF'
+    }
+  },
+  back_button: {
+    border: 'solid',
+    borderWidth: '1.9px',
+    boxShadow: 'none',
+    borderRadius: 16,
+    borderColor: '#213d77',
+    color: '#213d77',
+    backgroundColor: 'transparent',
+    textTransform: 'capitalize',
+    '&:hover': {
+      borderColor: '#213d77',
+      backgroundColor: 'transparent',
+      color: '#213d77'
     }
   },
   button2: {
@@ -221,7 +204,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   container1: {
-		["@media (min-width: 280px) and (max-width: 1192px)"]: {
+		["@media (min-width: 280px) and (max-width: 600px)"]: {
       width: '100%',
 			display: 'flex',
 			flexDirection: 'column',
@@ -272,19 +255,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function createData(vendor_name, service, display_name, operational_hours, service_number, items_offered, status) {
-  return { vendor_name, service, display_name, operational_hours, service_number, items_offered, status };
+function createData(vendor_name, item_name, description, price, delivery_charges, status) {
+  return { vendor_name, item_name, description, price, delivery_charges, status };
 }
 
 const rows = [
-  createData("John Doe", "Medicines", "Medico Chemist", "10 AM - 10 PM",7789568542, 10, 1),
-  createData("Jack", "Wheel Chair", "Wheel Chair", "10 AM - 10 PM",7789568542, 10, 0),
-  createData("John Doe", "Wheel Chair", "Wheel Chair", "10 AM - 10 PM",7789568542, 20, 1),
-  createData("Jack", "Medicines", "Medico Chemist", "10 AM - 10 PM",7789568542, 20, 1),
-  createData("John Doe", "Wheel Chair", "Wheel Chair", "10 AM - 10 PM",7789568542, 10, 0),
+  createData("John Doe", "Combiflame", "Demo Description", "110","0.0", "Approved"),
+  createData("Jack", "Crocin", "Demo Description", "200","0.0", "Disapproved"),
+  createData("John Doe", "Vicks", "Demo Description", "300","0.0", "New"),
+  createData("Jack", "Vicks", "Demo Description", "100","0.0", "New"),
+  createData("John Doe", "Combiflame", "Demo Description", "300","0.0", "Approved"),
 ];
 
-export function VendorsService(props) {
+export function ItemDetails(props) {
+  const history= useHistory();
   const [pageNo, setPageNo] = useState();
   const [date, setDate] = useState({
     start: new Date().toISOString().slice(0, 10),
@@ -348,10 +332,10 @@ export function VendorsService(props) {
   //     if(response.data.success){
   //       debugger
   //       // toast.success(response.data.message)
-        setModal({
-          deleteModal: false,
-          deletedModal: true
-        })
+  //       setModal({
+  //         deleteModal: false,
+  //         deletedModal: true
+  //       })
   //       props.getVendorDataByParams(pageNo, props.limit, search)
   //     } else {
   //       debugger
@@ -493,13 +477,12 @@ export function VendorsService(props) {
   return(
     <div className={styles.main}>
       <div className={styles.header}>
-        <div className={styles.title}>Vendor Services</div>
-      </div>
-      <Link to="/vendors-service/add">
-        <Button onClick={() => console.log('Vendor service')} className={classes.link1} variant="contained">
-          + Add Vendor Service
+        <div className={styles.title}>Item Details</div>
+        <Button startIcon={<ArrowBackIosIcon color="white" />} onClick={() => history.push('/vendors-service')} className={classes.back_button} variant="contained">
+          Back
         </Button>
-        </Link>
+      </div>
+      
       <div className={styles.table}>
       <div className={styles.filterContent}>
         <div className={styles.searchBarDiv}>
@@ -523,30 +506,18 @@ export function VendorsService(props) {
         </FormControl>
 
          {/*Select*/}
-				 <div className={styles.selectDiv1}>
-					 <select className={styles.select1} name="station_id" /*value={search.station_id}*/ onChange={handleInputs}>
-						 <option selected disabled>Vendor Name</option>
-             <option value={"1"}>All</option>
-             <option value={"2"}>ABC</option>
-             <option value={"3"}>John Doe</option>
-						 {/*dropDownDetails.length > 0 && dropDownDetails.map(data =>
-							 <option key={data._id} value={data._id}>{data.station_name}</option>
-             )*/}
-				 </select>
-				 </div>
-
-				 <div className={styles.selectDiv1}>
-           <select className={styles.select1} name="service_name" /*value={search.service_name}*/ onChange={handleInputs}>
-             <option selected disabled>Services Category</option>
-             <option value={"1"}>ALL</option>
-             <option value={"2"}>Medicines</option>
-             <option value={"3"}>Food and Beverage</option>
-             <option value={"4"}>Porter</option>
-						 {/*categoryDropDown.length > 0 && categoryDropDown.map(data =>
-							 <option key={data._id} value={data._id}>{data.category_name}</option>
-             )*/}
-         </select>
-         </div>
+		<div className={styles.selectDiv1}>
+			<select className={styles.select1} name="station_id" /*value={search.station_id}*/ onChange={handleInputs}>
+				<option selected disabled>Status</option>
+                <option value={"1"}>All</option>
+                <option value={"2"}>Approved</option>
+                <option value={"3"}>Disapproved</option>
+                <option value={"3"}>New</option>
+				{/*dropDownDetails.length > 0 && dropDownDetails.map(data =>
+				<option key={data._id} value={data._id}>{data.station_name}</option>
+                )*/}
+			</select>
+		</div>
 
         {/* <div className={styles.dateDiv}> */}
         {/*<div className={classes.container1}>
@@ -617,12 +588,11 @@ export function VendorsService(props) {
         <TableHead style={{backgroundColor: '#213d77'}}>
           <TableRow>
             <TableCell style={{color: "white"}} >S.No.</TableCell>
-            <TableCell style={{color: "white"}} align="center">Vendor Name</TableCell>
-            <TableCell style={{color: "white"}} align="center">Service Category</TableCell>
-            <TableCell style={{color: "white"}} align="center">Display Name</TableCell>
-            <TableCell style={{color: "white"}} align="center">Operational Hours</TableCell>
-            <TableCell style={{color: "white"}} align="center">Service Booking Phone Number</TableCell>
-            <TableCell style={{color: "white"}} align="center">Items Offered</TableCell>
+            <TableCell style={{color: "white"}} align="center">Image</TableCell>
+            <TableCell style={{color: "white"}} align="center">Item Name</TableCell>
+            <TableCell style={{color: "white"}} align="center">Description</TableCell>
+            <TableCell style={{color: "white"}} align="center">Price</TableCell>
+            <TableCell style={{color: "white"}} align="center">Delivery Charges</TableCell>
 						<TableCell style={{color: "white"}} align="center">Status</TableCell>
             {/* <TableCell align="center">Status</TableCell> */}
             <TableCell style={{color: "white"}} align="center">Actions</TableCell>
@@ -632,26 +602,15 @@ export function VendorsService(props) {
           {rows.map((row, index) => (
             <TableRow className={classes.table} key={row.vendor_name}>
               <TableCell component="th" scope="row">
-                {index+1}
+                0{index+1}.
               </TableCell>
-              <TableCell align="center">{/*row.userName*/row.vendor_name}</TableCell>
-              <TableCell align="center">{/*row.userNumber*/row.service}</TableCell>
-              <TableCell align="center">{/*row.userEmail*/row.display_name}</TableCell>
-              <TableCell align="center">{/*row.service*/row.operational_hours}</TableCell>
-              <TableCell align="center">{/*row.stationName*/row.service_number}</TableCell>
-              <TableCell align="center">{/*row.hours*/row.items_offered}</TableCell>
-							<TableCell style={{color: row.status? 'green': 'red'}} align="center">{/*row.service*/row.status?"active": "In-active"}</TableCell>
-              <TableCell align="center">
-              <div className={styles.dropdown}>
-                <button className={styles.dropbtn}>Action <img src={downArrow} className={styles.arrow}/></button>
-                <div className={styles.dropdown_content}>
-                  <a><div onClick={(e) => toggleModal(e, 'details', index)}>View Details</div></a>
-                  <a><div onClick={(e) => toggleModal(e, 'delete', index)}>Change Status</div></a>
-                  <Link to={`vendors-service/${1}`}><a><div onClick={(e) => toggleModal(e, 'details', index)}>Edit Details</div></a></Link>
-                  <Link to={`vendors-service/item-details/${1}`}><a><div>Item Details</div></a></Link>
-                  <a><div onClick={(e) => toggleModal(e, 'delete', index)}>Delete Service</div></a>
-                </div>
-                </div></TableCell>
+              <TableCell align="center"><img style={{width: 35}} src={food_image} /></TableCell>
+              <TableCell align="center">{/*row.userNumber*/row.item_name}</TableCell>
+              <TableCell align="center">{/*row.userEmail*/row.description}</TableCell>
+              <TableCell align="center">{/*row.service*/row.price}</TableCell>
+              <TableCell align="center">{/*row.stationName*/row.delivery_charges}</TableCell>
+							<TableCell style={{color: row.status == 'Approved'? '#5ac67e': row.status == 'New'? '#213d77': '#cf7474'}} align="center">{/*row.service*/row.status}</TableCell>
+              <TableCell align="center"><div onClick={(e) => toggleModal(e, 'details', index)}><img src={view} style={{width: 17}} /></div></TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -664,7 +623,7 @@ export function VendorsService(props) {
 			{<Modal className={styles.modalContainer1} contentClassName={styles.customDeleteClass} isOpen={modal.deletedModal} toggle={toggleModalClose} centered={true}>
 					<ModalBody modalClassName={styles.modalContainer}>
           <img style={{width: 60}} src={flag} />
-					<p style={{marginTop: 20}}><strong style={{fontSize: 20}}>Successfully Deleted Vendor Service</strong>  </p>
+					<p style={{marginTop: 20}}><strong style={{fontSize: 20}}>Successfully Changed Vendor Status</strong>  </p>
 					</ModalBody>
 					<ModalFooter className={styles.deleteFooter}>
 						<Button
@@ -679,11 +638,11 @@ export function VendorsService(props) {
 					</ModalFooter>
 				</Modal>}
 
-			{/*Delete Vendor Service*/}
+			{/*Delete User*/}
       {<Modal className={styles.modalContainer1} contentClassName={styles.customDeleteClass} isOpen={modal.deleteModal} toggle={toggleModalClose} centered={true}>
 					<ModalBody modalClassName={styles.modalContainer}>
           <img style={{width: 60}} src={delete_logo} />
-				<p style={{marginTop: 20}}><strong style={{fontSize: 20, color: "#213d77"}}>Are you sure you want to delete {arrayDetails.vendor_name} Vendor Service?</strong>  </p>
+				<p style={{marginTop: 20}}><strong style={{fontSize: 20}}>Are you sure you want to delete {arrayDetails.vendor_name} Vendor Service?</strong>  </p>
 
 					</ModalBody>
 					<ModalFooter className={styles.deleteFooter}>
@@ -724,80 +683,46 @@ export function VendorsService(props) {
 					 }}
 					 onClick={toggleModalClose}
 				 /> 
-            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-            <Link to={`vendors-service/${1}`}><button className={styles.modalButton}/*style={{display: 'contents'}}*/ onClick={(e) => console.log(e)}>
-				        <img className={styles.modalImage} src={edit} />
-				        <small style={{display: 'flex', alignItems: 'center'}}>Edit Details</small>
-				        </button>
-            </Link>
-            </div>
-						<div className={styles.modalOuterDiv} style={{display: 'flex'}}>
+
+		    <div className={styles.modalOuterDiv} style={{display: 'flex', paddingBottom: 20}}>
       
-            <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-              <div className={styles.image_box}>
-              <img src={vendor_image} />
-              </div>
-            </div>
+                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                <div className={styles.image_box}>
+                <img src={food_image} />
+                </div>
+                </div>
 
             <div className={styles.modal_left_box} style={{display: 'flex', flexDirection: 'column'}}>
 						<div className={styles.box1}>
-            <div style={{fontSize: 14, marginLeft: 12, color: 'black'}} className={styles.title}>Station Admin Details</div>
 								<div className={styles.modalBox} /*stlye={{width: '100%', height: '100%',display: '' textAlign: 'start'}}*/>
-								<div className={styles.modalDiv}  className={styles.modalDiv} style={{flexDirection: 'row'}}>
-								<span className={styles.textModal}>Vendor Name</span><span style={{marginLeft: 100,marginRight: 25}}> - </span>{/*arrayDetails.userName*/arrayDetails.vendor_name}
+								<div className={styles.modalDiv}  className={styles.modalDiv} style={{display: 'flex', flexDirection: 'row'}}>
+								<span className={styles.textModal}>Item Name</span><span style={{marginLeft: 70,marginRight: 25}}> - </span><span>{/*arrayDetails.userName*/arrayDetails.item_name}</span>
 								</div>
-								<div  className={styles.modalDiv} style={{flexDirection: 'row'}}>
-								<span className={styles.textModal}>Display Name</span><span style={{marginLeft: 98,marginRight: 25}}> - </span>{/*arrayDetails.userNumber*/arrayDetails.display_name}
+								<div className={styles.modalDiv} style={{display: 'flex', display: 'flex', flexDirection: 'row'}}>
+								<span className={styles.textModal}>Description</span><span style={{marginLeft: 67,marginRight: 25}}> - </span><span>{/*arrayDetails.userNumber*/arrayDetails.description}</span>
 								</div>
-								<div  className={styles.modalDiv} style={{flexDirection: 'row'}}>
-								<span className={styles.textModal}>Service Type</span><span style={{marginLeft: 105,marginRight: 25}}> - </span>{/*arrayDetails.userEmail*/arrayDetails.service_name}
-								</div><div  className={styles.modalDiv} style={{flexDirection: 'row'}}>
-								<span className={styles.textModal}>Service Category</span><span style={{marginLeft: 77,marginRight: 25}}> - </span>Food and Beverages
+								<div  className={styles.modalDiv} style={{display: 'flex', flexDirection: 'row'}}>
+								<span className={styles.textModal}>Price</span><span style={{marginLeft: 108,marginRight: 25}}> - </span><span>{/*arrayDetails.userEmail*/arrayDetails.price}</span>
+								</div><div  className={styles.modalDiv} style={{display: 'flex', flexDirection: 'row'}}>
+								<span className={styles.textModal}>Delivery Charges</span><span style={{marginLeft: 32,marginRight: 25}}> - </span><span>{arrayDetails.delivery_charges}</span>
 								</div>
-                <div className={styles.modalDiv} style={{flexDirection: 'row'}}>
-								<span className={styles.textModal}>Service Booking Number</span><span style={{marginLeft: 26,marginRight: 25}}> - </span>{arrayDetails.service_number}
+                                <div className={styles.modalDiv} style={{display: 'flex', flexDirection: 'row'}}>
+								<span className={styles.textModal}>Display Name</span><span style={{marginLeft: 52,marginRight: 25}}> - </span><span>Remo's Cafe</span>
 								</div>
-                <div className={styles.modalDiv} style={{flexDirection: 'row'}}>
-								<span className={styles.textModal}>Chargeable</span><span style={{marginLeft: 111,marginRight: 25}}> - </span>{arrayDetails.status? "Yes": "No"}
+                                <div className={styles.modalDiv} style={{display: 'flex', flexDirection: 'row'}}>
+								<span className={styles.textModal}>Vendor Name</span><span style={{marginLeft: 52,marginRight: 25}}> - </span><span>{arrayDetails.vendor_name}</span>
 								</div>
+
+                                <div className={styles.modalDiv} style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                                <span style={{marginRight: 20}} className={styles.textModal} >Approve</span><label className={styles.switch}>
+                                <input type="checkbox" checked={true} />
+                                <span className={styles.slider + " " + styles.round}></span>
+                                </label>
+                                </div>
+                        
 								</div>
 						</div>
-
-						<div className={styles.box1}>
-            <div style={{fontSize: 14, marginLeft: 12,  color: 'black'}} className={styles.title}>Station Admin Details</div>
-							<div className={styles.modalBox} /*stlye={{width: '100%', height: '100%',display: '' textAlign: 'start'}}*/>
-							<div  className={styles.modalDiv} style={{flexDirection: 'row'}}>
-							<span className={styles.textModal}>Operational Hours</span><span style={{marginLeft: 78,marginRight: 25}}> - </span>{/*arrayDetails.service*/arrayDetails.operational_hours}
-							</div><div  className={styles.modalDiv} style={{flexDirection: 'row'}}>
-							<span className={styles.textModal}>Delivery Preparation Duration</span><span style={{marginLeft: 4,marginRight: 25}}> - </span>40 mins
-							</div><div  className={styles.modalDiv} style={{flexDirection: 'row'}}>
-							<span className={styles.textModal}>Maximum Use Duration</span><span style={{marginLeft: 44,marginRight: 25}}> - </span>45 mins
-							</div>
-              <FormControlLabel
-                  className={classes.form_control_checkbox}
-                  control={<GreenCheckbox checked={true} 
-                  /*onChange={handleChange}*/ 
-                  name="checkedG" />}
-                  label={<span className={styles.label_span}>Is Active</span>}
-              />
-              <FormControlLabel
-                  className={classes.form_control_checkbox}
-                  control={<GreenCheckbox checked={true} 
-                  /*onChange={handleChange}*/ 
-                  name="checkedG" />}
-                  label={<span className={styles.label_span}>Auto Approve Items</span>}
-              />
-              <FormControlLabel
-                  className={classes.form_control_checkbox}
-                  control={<GreenCheckbox checked={true} 
-                  /*onChange={handleChange}*/ 
-                  name="checkedG" />}
-                  label={<span className={styles.label_span}>Service applicable for cancellation</span>}
-              />
-              
-              </div>
-							</div>
-            </div>
+                </div>
 
 					</div>
 					</Modal>
@@ -839,4 +764,5 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(VendorsService);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(ItemDetails);
+// 1192

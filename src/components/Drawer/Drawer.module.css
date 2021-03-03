@@ -27,15 +27,15 @@
 .filter{
   width: 28px;
   height: 21px;
-  filter: invert(20%) sepia(58%) saturate(78%) hue-rotate(-144deg) brightness(72%) contrast(146%)
+  opacity: 0.5;
 }
 
 .filter:hover{
-  filter: invert(15%) sepia(53%) saturate(2187%) hue-rotate(205deg) brightness(100%) contrast(88%);
+  opacity: 1;
 }
 
 .list:hover .filter{
-  filter: invert(17%) sepia(86%) saturate(949%) hue-rotate(194deg) brightness(98%) contrast(92%);
+  opacity: 1;
 }
 
 .listText {
@@ -45,7 +45,6 @@
 
 .listText span{
   text-align: left;
-  word-break: normal;
   /* width: 12px; */
   font: normal normal 600 12px/15px Montserrat;
   letter-spacing: 0px;
@@ -69,7 +68,9 @@
 .selected {
   width: 28px;
   height: 21px;
-  filter :invert(0%) sepia(3%) saturate(0%) hue-rotate(250deg) brightness(103%) contrast(104%)
+  opacity: 1;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 @media (min-width: 180px) and (max-width: 560px) {
@@ -185,7 +186,7 @@
     /* background-color: rgb(185, 0, 130); */
   }
 }
-/* For selected */
+/* listText For selectedText selected */
 
   .listProfileText:hover .imageColor {
     filter: invert(20%) sepia(70%) saturate(862%) hue-rotate(190deg) brightness(93%) contrast(96%);
