@@ -20,7 +20,8 @@ import StationManagement from "../../../screens/StationManagement/StationManagem
 import UserManagement from "../../../screens/UserManagement/UserManagement";
 import AddUser from "../../../screens/UserManagement/AddUser/AddUser";
 import Vendors from '../../../screens/Vendors/Vendors';
-import Revenue from "../../../screens/Revenue/Revenue";
+import RevenueReport from "../../../screens/RevenueReport/RevenueReport";
+import ViewVendor from '../../../screens/RevenueReport/ViewVendor';
 import ItemDetails from '../../../screens/Vendors/VendorsService/ItemDetails/ItemDetails';
 import AddVendorService from "../../../screens/Vendors/VendorsService/AddVendorService/AddVendorService";
 import Users from "../../../screens/Users/Users";
@@ -48,7 +49,9 @@ const Router = () => (
         <Route path="/user-management" exact={true} render={props => <Drawer page={<UserManagement />} />}/>
         <Route path="/user-management/:user_id" exact={true} render={props => <Drawer page={<AddUser />} />} />
         <Route path="/vendors" exact={true} render={props => <Drawer page={<Vendors />} />} />
-        <Route path="/revenue" exact={true} render={props => <Drawer page={<Revenue />} />} />
+        <Route path="/revenue-report" exact={true} render={props => <Drawer page={<RevenueReport />} />} />
+        <Route path="/revenue-report-vendor" exact={true} render={props => <Drawer page={<RevenueReport />} />} />
+        <Route path="/revenue-report-vendor/:vendor_id" exact={true} render={props => <Drawer page={<ViewVendor />} />} />
         <Route path="/users" exact={true} render={props => <Drawer page={<Users />} />} />
         {<Route path="/profile" render={props => <Drawer page={<ProfileSettings />} />} />}
         <Route path="/vendors-service" exact={true} render={props => <Drawer page={<VendorsService />} />} />

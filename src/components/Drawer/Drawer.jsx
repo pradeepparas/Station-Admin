@@ -447,10 +447,10 @@ export function MiniDrawer(props) {
             </ListItem>
             </Link>}
 
-            <Link to="/revenue">
-            <ListItem disableRipple={true} className={path == 'revenue' ? styles.active : styles.list} button>
-              <ListItemIcon><img className={path == 'revenue' ? styles.selected : styles.filter} src={rupee} /></ListItemIcon>
-              <ListItemText style={{ whiteSpace: open ? 'break-spaces': ""}} className={path == 'revenue' ? styles.selectedText : styles.listText} primary={"Revene Reports"} />
+            <Link to="/revenue-report">
+            <ListItem disableRipple={true} className={path == 'revenue-report' ? styles.active : styles.list} button>
+              <ListItemIcon><img className={path == 'revenue-report' ? styles.selected : styles.filter} src={rupee} /></ListItemIcon>
+              <ListItemText style={{ whiteSpace: open ? 'break-spaces': ""}} className={path == 'revenue-report' ? styles.selectedText : styles.listText} primary={"Revene Reports"} />
             </ListItem>
             </Link>
 
@@ -471,7 +471,7 @@ export function MiniDrawer(props) {
             <Link to="/profile">
             <ListItem disableRipple={true} className={path == 'profile' ? styles.active : styles.list} button>
               <ListItemIcon><img className={path == 'profile' ? styles.selected : styles.filter} src={users_cog} /></ListItemIcon>
-              <ListItemText style={{ whiteSpace: open ? 'break-spaces': "", transitionDelay: '10s'}} className={path == 'profile' ? styles.selectedText : styles.listText} primary={"Profile Settings"} />
+              <ListItemText style={{ whiteSpace: open ? 'break-spaces': ""}} className={path == 'profile' ? styles.selectedText : styles.listText} primary={"Profile Settings"} />
             </ListItem>
             </Link>
         </List>
