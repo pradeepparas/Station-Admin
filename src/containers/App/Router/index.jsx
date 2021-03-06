@@ -31,6 +31,7 @@ import Forgot_password from "../../../screens/ForgotPassword/Forgot_password";
 import Log_in from "../../../screens/Login/Log_in";
 import Reset_password from "../../../screens/ResetPassword/Reset_password";
 import OTP1 from "../../../screens/OTP/OTP";
+import RevenueGraph from "../../../screens/RevenueReport/RevenueGraph";
 
 // components
 import Drawer from "../../../components/Drawer/Drawer";
@@ -58,6 +59,7 @@ const Router = () => (
         <Route path="/vendors-service/:vendor_id" exact={true} render={props => <Drawer page={<AddVendorService />} />} />
         <Route path="/services/:service_id" exact={true} render={props => <Drawer page={<AddService />} />} />
         <Route path="/vendors-service/item-details/:item_id" exact={true} render={props => <Drawer page={<ItemDetails />} />} />
+        <Route path="/revenue-graph" exact={true} render={props => <Drawer page={<RevenueGraph />} />} />
         {// <Route exact path="/" component={Landing} />
         // <Route path="/404" component={NotFound404} />
         // <Route path="/lock_screen" component={LockScreen} />
